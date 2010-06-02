@@ -1,0 +1,13 @@
+com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException, true, true, true, true, com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException/3936916533, 3936916533
+java.lang.Exception, true, false, true, false, java.lang.Exception/1920171873, 1920171873
+java.lang.IllegalArgumentException, true, true, false, false, java.lang.IllegalArgumentException/1755012560, 1755012560
+java.lang.Integer, true, true, false, false, java.lang.Integer/3438268394, 3438268394
+java.lang.Number, true, false, false, false, java.lang.Number/300033342, 300033342
+java.lang.NumberFormatException, true, true, false, false, java.lang.NumberFormatException/3305228476, 3305228476
+java.lang.RuntimeException, true, false, true, false, java.lang.RuntimeException/515124647, 515124647
+java.lang.String, true, true, true, true, java.lang.String/2004016611, 2004016611
+java.lang.Throwable, true, false, true, false, java.lang.Throwable/2953622131, 2953622131
+java.util.Stack, true, true, false, false, java.util.Stack/1031431137, 1031431137
+java.util.Vector, true, true, false, false, java.util.Vector/3125574444, 3125574444
+org.fehlis.underrealm.client.InstanceService, false, false, false, false, _, 3668047559
+org.fehlis.underrealm.shared.Dungeon, true, true, true, true, org.fehlis.underrealm.shared.Dungeon/2233750376, 2233750376

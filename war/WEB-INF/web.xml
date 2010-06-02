@@ -7,12 +7,22 @@
   
   <!-- Servlets -->
   <servlet>
-    <servlet-name>greetServlet</servlet-name>
-    <servlet-class>org.fehlis.underrealm.server.GreetingServiceImpl</servlet-class>
+    <servlet-name>instanceServlet</servlet-name>
+    <servlet-class>org.fehlis.underrealm.server.InstanceServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>underrealmServlet</servlet-name>
+    <servlet-class>org.fehlis.underrealm.server.UnderrealmServiceImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
+    <servlet-name>instanceServlet</servlet-name>
+    <url-pattern>/underrealm/instance</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>underrealmServlet</servlet-name>
     <url-pattern>/underrealm/greet</url-pattern>
   </servlet-mapping>
   
