@@ -32,13 +32,16 @@ public class InstanceManager implements InstanceCreateDialogListener
 	DungeonListBox dungeonList;
 	
 	public void onModuleLoad()
-	{	
+	{
 		showMainMenu();
 	}
 	
 	
 	void showMainMenu()
-	{		
+	{
+		// clear HTML first
+		Basepage.clearPage();
+		
 		createButton = new Button("Create new");
 		selectButton = new Button("Select");
 		dungeonList = new DungeonListBox();
@@ -51,6 +54,7 @@ public class InstanceManager implements InstanceCreateDialogListener
 
 		// Add the nameField and sendButton to the RootPanel
 		// Use RootPanel.get() to get the entire body element
+		RootPanel.get("pageHeader").clear();
 		RootPanel.get("pageHeader").add(new Label( "Instance Manager") );
 
 		RootPanel.get("listContainer").add(dungeonList);

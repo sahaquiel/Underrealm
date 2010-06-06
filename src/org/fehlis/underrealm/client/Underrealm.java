@@ -5,6 +5,8 @@ import java.util.Vector;
 import org.fehlis.underrealm.client.ui.DungeonListBox;
 import org.fehlis.underrealm.shared.Dungeon;
 import org.fehlis.underrealm.shared.FieldVerifier;
+import org.fehlis.underrealm.shared.Player;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -46,13 +48,24 @@ public class Underrealm implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-		doMainMenu();
+		if ( thePlayer == null )
+		{
+			oldLogin();
+		}
+		else
+		{
+			showMainMenu();
+		}
 //		new InstanceManager().showMainMenu();
 	}
 	
 	HTML elap;
 	
-	private void doMainMenu() {
+	private Player thePlayer = null;
+	
+	private void showMainMenu()
+	{
+		Basepage.clearPage();
 		
 		final Button bt_instMan = new Button("Instance Manager");
 		final Button bt_testPage = new Button("Update Test");
@@ -68,7 +81,7 @@ public class Underrealm implements EntryPoint {
 		RootPanel.get("buttonContainer").add(bt_instMan);
 		RootPanel.get("buttonContainer").add(bt_testPage);
 
-		elap = new HTML( "(c) noone" );
+		elap = new HTML( "welcome, " + thePlayer.getNickname() );
 		RootPanel.get().add( elap );
 		
 		// Create a handler for the sendButton and nameField
@@ -110,13 +123,13 @@ public class Underrealm implements EntryPoint {
 	private void doTest2()
 	{
 		elap.setText( "request sent.");
-		greetingService.greetServer("notifyme",
-				new AsyncCallback<String>() {
+		greetingService.greetServer("gambit",
+				new AsyncCallback<Player>() {
 					public void onFailure(Throwable caught) {
 						elap.setText( "error received:" + caught );
 					}
 					
-					public void onSuccess(String result) {
+					public void onSuccess(Player result) {
 						elap.setText( "response received: " + result );
 					}
 				});
@@ -164,8 +177,8 @@ public class Underrealm implements EntryPoint {
 
 		// Add the nameField and sendButton to the RootPanel
 		// Use RootPanel.get() to get the entire body element
-		RootPanel.get("nameFieldContainer").add(nameField);
-		RootPanel.get("sendButtonContainer").add(sendButton);
+		RootPanel.get("listContainer").add(nameField);
+		RootPanel.get("buttonContainer").add(sendButton);
 		RootPanel.get("errorLabelContainer").add(errorLabel);
 
 		// Focus the cursor on the name field when the app loads
@@ -235,7 +248,7 @@ public class Underrealm implements EntryPoint {
 				textToServerLabel.setText(textToServer);
 				serverResponseLabel.setText("");
 				greetingService.greetServer(textToServer,
-						new AsyncCallback<String>() {
+						new AsyncCallback<Player>() {
 							public void onFailure(Throwable caught) {
 								// Show the RPC error message to the user
 								dialogBox
@@ -247,13 +260,17 @@ public class Underrealm implements EntryPoint {
 								closeButton.setFocus(true);
 							}
 
-							public void onSuccess(String result) {
+							public void onSuccess(Player result) {
 								dialogBox.setText("Remote Procedure Call");
 								serverResponseLabel
 										.removeStyleName("serverResponseLabelError");
-								serverResponseLabel.setHTML(result);
+								serverResponseLabel.setHTML(result.getNickname());
 								dialogBox.center();
 								closeButton.setFocus(true);
+								
+								thePlayer = result;
+								
+								showMainMenu();
 							}
 						});
 			}

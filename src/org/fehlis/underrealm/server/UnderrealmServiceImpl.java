@@ -2,6 +2,8 @@ package org.fehlis.underrealm.server;
 
 import org.fehlis.underrealm.client.UnderrealmService;
 import org.fehlis.underrealm.shared.FieldVerifier;
+import org.fehlis.underrealm.shared.Player;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
@@ -11,7 +13,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class UnderrealmServiceImpl extends RemoteServiceServlet implements
 		UnderrealmService {
 
-	public String greetServer(String input) throws IllegalArgumentException {
+	public Player greetServer(String input) throws IllegalArgumentException {
 /*
 		String serverInfo = getServletContext().getServerInfo();
 		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
@@ -23,6 +25,8 @@ public class UnderrealmServiceImpl extends RemoteServiceServlet implements
 		} catch (InterruptedException e) {
 		}
 		
-		return "" + System.currentTimeMillis();
+		Player p = DataStore.getUserByNickname( input );		
+		
+		return p;
 	}
 }
