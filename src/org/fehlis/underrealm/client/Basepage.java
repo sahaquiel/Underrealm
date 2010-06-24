@@ -6,6 +6,7 @@ public class Basepage
 {
 	public static void clearPage()
 	{		
+		RootPanel.get("loginContainer").clear();
 		RootPanel.get("pageHeader").clear();
 
 		RootPanel.get("listContainer").clear();

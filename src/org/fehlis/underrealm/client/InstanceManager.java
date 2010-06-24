@@ -5,6 +5,7 @@ import java.util.Vector;
 import org.fehlis.underrealm.client.ui.DungeonListBox;
 import org.fehlis.underrealm.client.ui.InstanceCreateDialog;
 import org.fehlis.underrealm.client.ui.InstanceCreateDialogListener;
+import org.fehlis.underrealm.client.ui.LoginInfoPanel;
 import org.fehlis.underrealm.shared.Dungeon;
 
 import com.google.gwt.core.client.GWT;
@@ -31,16 +32,24 @@ public class InstanceManager implements InstanceCreateDialogListener
 	InstanceCreateDialog createDialogBox;
 	DungeonListBox dungeonList;
 	
-	public void onModuleLoad()
+//	public void onModuleLoad()
+//	{
+//		showMainMenu();
+//	}
+	
+	
+	MainController m_ctrl;
+	
+	public InstanceManager(MainController ctrl)
 	{
-		showMainMenu();
+		m_ctrl = ctrl;
 	}
-	
-	
-	void showMainMenu()
+
+	public void showMainMenu()
 	{
 		// clear HTML first
 		Basepage.clearPage();
+		RootPanel.get("loginContainer").add( new LoginInfoPanel( m_ctrl ) );
 		
 		createButton = new Button("Create new");
 		selectButton = new Button("Select");

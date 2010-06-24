@@ -3,6 +3,8 @@ package org.fehlis.underrealm.client;
 import java.util.Vector;
 
 import org.fehlis.underrealm.client.ui.DungeonListBox;
+import org.fehlis.underrealm.client.ui.LoginInfoPanel;
+import org.fehlis.underrealm.client.ui.MainMenuPanel;
 import org.fehlis.underrealm.shared.Dungeon;
 import org.fehlis.underrealm.shared.FieldVerifier;
 import org.fehlis.underrealm.shared.Player;
@@ -28,7 +30,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class Underrealm implements EntryPoint {
+public class Underrealm implements EntryPoint, MainController {
 	/**
 	 * The message displayed to the user when the server cannot be reached or
 	 * returns an error.
@@ -47,80 +49,47 @@ public class Underrealm implements EntryPoint {
 	/**
 	 * This is the entry point method.
 	 */
-	public void onModuleLoad() {
+	public void onModuleLoad()
+	{
+			showMainMenu();
+	}
+	
+	HTML elap = new HTML();
+	private Player thePlayer = null;
+	
+	public Player getPlayer()
+	{
+		return thePlayer;
+	}
+	
+	private void showMainMenu()
+	{
+		Basepage.clearPage();
+		
 		if ( thePlayer == null )
 		{
 			oldLogin();
 		}
 		else
 		{
-			showMainMenu();
+			RootPanel.get("pageHeader").add(new Label( "Underrealms Main Menu") );
+			
+			RootPanel.get("buttonContainer").add( new MainMenuPanel( this ) );			
+			RootPanel.get("buttonContainer").add( new LoginInfoPanel( this ) );			
+			RootPanel.get("loginContainer").add( new LoginInfoPanel( this ) );
 		}
-//		new InstanceManager().showMainMenu();
-	}
-	
-	HTML elap;
-	
-	private Player thePlayer = null;
-	
-	private void showMainMenu()
-	{
-		Basepage.clearPage();
 		
-		final Button bt_instMan = new Button("Instance Manager");
-		final Button bt_testPage = new Button("Update Test");
-
-		// We can add style names to widgets
-		bt_instMan.addStyleName("sendButton");
-		bt_testPage.addStyleName("sendButton");
-
-		RootPanel.get("pageHeader").add(new Label( "Underrealms Main Menu") );
-		
-		// Add the nameField and sendButton to the RootPanel
-		// Use RootPanel.get() to get the entire body element
-		RootPanel.get("buttonContainer").add(bt_instMan);
-		RootPanel.get("buttonContainer").add(bt_testPage);
-
-		elap = new HTML( "welcome, " + thePlayer.getNickname() );
 		RootPanel.get().add( elap );
-		
-		// Create a handler for the sendButton and nameField
-		class MyHandler implements ClickHandler, KeyUpHandler {
-			/**
-			 * Fired when the user clicks on the sendButton.
-			 */
-			public void onClick(ClickEvent event) {
-				if ( event.getSource() == bt_instMan )
-				{
-					new InstanceManager().showMainMenu();
-				}
-				else if ( event.getSource() == bt_testPage )
-				{
-					//doTest();
-					doTest2();
-				}
-					 
-			}
-
-			/**
-			 * Fired when the user types in the nameField.
-			 */
-			public void onKeyUp(KeyUpEvent event) {
-//				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-//					sendNameToServer();
-//				}
-			}
-		};
-
-		// Add a handler to send the name to the server
-		MyHandler handler = new MyHandler();
-		bt_instMan.addClickHandler(handler);
-		bt_instMan.addKeyUpHandler(handler);
-		bt_testPage.addClickHandler(handler);
-		bt_testPage.addKeyUpHandler(handler);
 	}
 	
-	private void doTest2()
+	public void doLogout()
+	{
+		thePlayer = null;
+		
+		showMainMenu();		
+	}
+	
+	public void doTest2()
 	{
 		elap.setText( "request sent.");
 		greetingService.greetServer("gambit",
@@ -165,11 +134,15 @@ public class Underrealm implements EntryPoint {
 		
 	}
 	
-	private void oldLogin() {
+	private void oldLogin()
+	{	
+		Basepage.clearPage();
+		
+		RootPanel.get("loginContainer").add( new LoginInfoPanel( this ) );
 		
 		final Button sendButton = new Button("Send");
 		final TextBox nameField = new TextBox();
-		nameField.setText("GWT User");
+		nameField.setText("gambit");
 		final Label errorLabel = new Label();
 
 		// We can add style names to widgets
