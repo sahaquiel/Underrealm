@@ -2,9 +2,13 @@ package org.fehlis.underrealm.client;
 
 import java.util.Vector;
 
+import org.fehlis.underrealm.client.ui.DiceRollDialog;
+import org.fehlis.underrealm.client.ui.DiceRollDialogListener;
 import org.fehlis.underrealm.client.ui.DungeonListBox;
+import org.fehlis.underrealm.client.ui.InstanceCreateDialog;
 import org.fehlis.underrealm.client.ui.LoginInfoPanel;
 import org.fehlis.underrealm.client.ui.MainMenuPanel;
+import org.fehlis.underrealm.shared.Dice;
 import org.fehlis.underrealm.shared.Dungeon;
 import org.fehlis.underrealm.shared.FieldVerifier;
 import org.fehlis.underrealm.shared.Player;
@@ -44,6 +48,10 @@ public class Underrealm implements EntryPoint, MainController {
 	 */
 	private final UnderrealmServiceAsync greetingService = GWT.create(UnderrealmService.class);
 
+	public UnderrealmServiceAsync getGreetingService() {
+		return greetingService;
+	}
+
 	private final InstanceServiceAsync instanceService = GWT.create(InstanceService.class);
 
 	/**
@@ -75,7 +83,6 @@ public class Underrealm implements EntryPoint, MainController {
 			RootPanel.get("pageHeader").add(new Label( "Underrealms Main Menu") );
 			
 			RootPanel.get("buttonContainer").add( new MainMenuPanel( this ) );			
-			RootPanel.get("buttonContainer").add( new LoginInfoPanel( this ) );			
 			RootPanel.get("loginContainer").add( new LoginInfoPanel( this ) );
 		}
 		
@@ -88,20 +95,10 @@ public class Underrealm implements EntryPoint, MainController {
 		
 		showMainMenu();		
 	}
-	
+
 	public void doTest2()
 	{
-		elap.setText( "request sent.");
-		greetingService.greetServer("gambit",
-				new AsyncCallback<Player>() {
-					public void onFailure(Throwable caught) {
-						elap.setText( "error received:" + caught );
-					}
-					
-					public void onSuccess(Player result) {
-						elap.setText( "response received: " + result );
-					}
-				});
+		new DiceRollTest( this, 6 );
 	}
 	
 	private void doTest()

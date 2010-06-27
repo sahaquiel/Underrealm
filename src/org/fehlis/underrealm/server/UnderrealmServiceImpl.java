@@ -1,6 +1,7 @@
 package org.fehlis.underrealm.server;
 
 import org.fehlis.underrealm.client.UnderrealmService;
+import org.fehlis.underrealm.shared.Dice;
 import org.fehlis.underrealm.shared.FieldVerifier;
 import org.fehlis.underrealm.shared.Player;
 
@@ -13,6 +14,18 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class UnderrealmServiceImpl extends RemoteServiceServlet implements
 		UnderrealmService {
 
+	public int[] rollRice( Dice[] dices )
+	{
+		int[] ret = new int[dices.length];
+		
+		for ( int i = 0; i < dices.length; i++ )
+		{
+			ret[i] = dices[i].roll();
+		}
+		
+		return ret;
+	}
+	
 	public Player greetServer(String input) throws IllegalArgumentException {
 /*
 		String serverInfo = getServletContext().getServerInfo();
